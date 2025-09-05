@@ -1,6 +1,6 @@
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
@@ -15,7 +15,7 @@ class ProfileSetupScreen extends StatefulWidget {
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final PageController _pageController = PageController();
   int _currentStep = 0;
-  final ImagePicker _picker = ImagePicker();
+  // Image picker removed - using simple version
 
   // Form controllers
   final _nameController = TextEditingController();
@@ -24,8 +24,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final _bioController = TextEditingController();
 
   // Form data
-  List<File> _photos = [];
-  List<String> _selectedInterests = [];
+  final List<File> _photos = [];
+  final List<String> _selectedInterests = [];
   String _selectedGender = '';
   String _lookingFor = '';
 
@@ -590,18 +590,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
   Future<void> _pickImage() async {
     try {
-      final XFile? image = await _picker.pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1024,
-        maxHeight: 1024,
-        imageQuality: 80,
-      );
-      
-      if (image != null) {
-        setState(() {
-          _photos.add(File(image.path));
-        });
-      }
+      // Image picking removed - using simple version
+      // Simulate adding a photo
+      setState(() {
+        // _photos.add(File('placeholder'));
+      });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

@@ -1,14 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
 import 'screens/onboarding_screen_simple.dart';
-import 'screens/auth_screen_simple.dart';
-import 'screens/profile_setup_screen_simple.dart';
-import 'screens/discovery_screen_simple.dart';
-import 'screens/matches_screen.dart';
-import 'screens/chat_screen.dart';
-import 'screens/profile_screen.dart';
+import 'screens/main_navigation_screen.dart';
 import 'services/auth_service_simple.dart';
 
 void main() async {
@@ -28,14 +21,13 @@ class DatingApp extends StatelessWidget {
           create: (_) => AuthService(),
         ),
       ],
-      child: MaterialApp.router(
+      child: MaterialApp(
         title: 'Dating App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.red,
           primaryColor: const Color(0xFFFF6B6B),
           scaffoldBackgroundColor: Colors.white,
-          // fontFamily: 'Inter',
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             foregroundColor: Color(0xFF2C3E50),
@@ -74,43 +66,25 @@ class DatingApp extends StatelessWidget {
             fillColor: Colors.grey.shade50,
           ),
         ),
-        routerConfig: _router,
+        home: const AuthWrapper(),
       ),
     );
   }
 }
 
-final GoRouter _router = GoRouter(
-  initialLocation: '/onboarding',
-  routes: [
-    GoRoute(
-      path: '/onboarding',
-      builder: (context, state) => const OnboardingScreen(),
-    ),
-    GoRoute(
-      path: '/auth',
-      builder: (context, state) => const AuthScreen(),
-    ),
-    GoRoute(
-      path: '/profile-setup',
-      builder: (context, state) => const ProfileSetupScreen(),
-    ),
-    GoRoute(
-      path: '/discovery',
-      builder: (context, state) => const DiscoveryScreen(),
-    ),
-    GoRoute(
-      path: '/matches',
-      builder: (context, state) => const MatchesScreen(),
-    ),
-    GoRoute(
-      path: '/chat',
-      builder: (context, state) => const ChatScreen(),
-    ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfileScreen(),
-    ),
-  ],
-);
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AuthService>(
+      builder: (context, authService, child) {
+        if (authService.isLoggedIn) {
+          return const MainNavigationScreen();
+        } else {
+          return const OnboardingScreen();
+        }
+      },
+    );
+  }
+}

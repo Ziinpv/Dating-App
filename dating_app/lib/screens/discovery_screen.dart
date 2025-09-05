@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../models/user_model.dart';
-import '../widgets/swipe_card.dart';
+import '../widgets/swipe_card_simple.dart';
 import '../widgets/custom_button.dart';
 
 class DiscoveryScreen extends StatefulWidget {
